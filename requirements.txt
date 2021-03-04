@@ -1,0 +1,14 @@
+# Computer Vision Library
+opencv-python
+
+# Machine Learning Framework (Tensorflow)
+tensorflow
+
+# Machine Learning Library
+scikit-learn
+scikit-image
+
+# Math libraries
+NumPy
+matplotlib
+imutils
