@@ -23,6 +23,8 @@ A model prediction is then made for each face in the frame, and the output of th
 
 I.E. Red rectangle for 'No Mask Detected', and a Blue rectangle for 'Mask Detected', along with a confidence percentage.
 
+![demo gif](https://github.com/bralpdx/rt-facemask-detection/blob/master/demo/mask_v3.gif)
+
 ### About
 ---
 This application based off of the following model:
