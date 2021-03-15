@@ -8,11 +8,9 @@ a with_mask, and without_mask subdirectories.
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import load_img
-import matplotlib.pyplot as plt
 import numpy as np
 import random
 import os
-import cv2
 import pickle
 
 BASEDIR = "mask-data"
@@ -34,8 +32,10 @@ def create_training_data():
             img = load_img(os.path.join(path, file), target_size=(224, 224))
             try:
                 img = img_to_array(img)
-            except Exception:
+            except Exception as e:
+                # Prints name of file causing conflict.
                 print(file)
+
             img = preprocess_input(img)
             training_data.append([img, CATEGORIES[class_num]])
 

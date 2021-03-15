@@ -17,6 +17,9 @@ IMG_SIZE = 224
 
 model = load_model("mask_recog_ver3.h5")  # Our custom model
 
+white = (255, 255, 255)
+black = (0, 0, 0)
+green = (0, 255, 0)
 
 # Check if the webcam is opened correctly
 if not video_input.isOpened():
@@ -25,8 +28,9 @@ if not video_input.isOpened():
 while True:
     ret, frame = video_input.read()
     frame = cv2.resize(frame, None, fx=1, fy=1, interpolation=cv2.INTER_AREA)
-    font = cv2.FONT_HERSHEY_TRIPLEX
-    cv2.putText(frame, "ESC to exit...", (50, 50), font, 0.75, (0, 125, 255), 2, cv2.LINE_4)
+    font = cv2.FONT_HERSHEY_DUPLEX
+    cv2.rectangle(frame, (20, 40), (200, -40), black, -1)
+    cv2.putText(frame, "ESC to exit...", (25, 25), font, 0.75, white, 2, cv2.LINE_4)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     detected_faces = face_casc.detectMultiScale(gray,
                                                 scaleFactor=1.1,
@@ -37,7 +41,7 @@ while True:
     faces = []  # Faces detected by cascade model
     predictions = []  # Predictions made my mask model
     for (x, y, w, h) in detected_faces:
-        # cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        # cv2.rectangle(frame, (x, y), (x + w, y + h), green, 2)
         facial_frame = frame[y:y+h, x:x+w]
         facial_frame = cv2.cvtColor(facial_frame, cv2.COLOR_BGR2RGB)
         facial_frame = cv2.resize(facial_frame, (IMG_SIZE, IMG_SIZE))
@@ -66,7 +70,8 @@ while True:
             frame_color = (0, 0, 255)
 
         label = "{}: {:.2f}%".format(label, max(mask, noMask) * 100)  # Shows percentage of prediction
-        cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, frame_color, 2)
+        cv2.rectangle(frame, (x, y), (x + w, y - 25), black, -1)
+        cv2.putText(frame, label, (x+5, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, white, 2)
         cv2.rectangle(frame, (x, y), (x+w, y+h), frame_color, 2)
 
     # Display the resulting frame
