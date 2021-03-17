@@ -28,18 +28,18 @@ labels = pickle.load(open("y.pickle", "rb"))  # Image Labels. 0 indicates mask, 
 data = np.array(data, dtype="float32")
 labels = np.array(labels)
 
-# Implements pre-trained model. Pre-trained on imagenet
+# Implements pre-trained model as base layer. Pre-trained on imagenet.
 baseModel = MobileNetV2(weights="imagenet", include_top=False,
                         input_tensor=Input(shape=(IMG_SIZE, IMG_SIZE, 3)))
 
 # construct the head of the model that will be placed on top of the
 # the base model
-headModel = baseModel.output  # Convolution Layer
-headModel = AveragePooling2D(pool_size=(7, 7))(headModel)  # Pooling Layer
-headModel = Flatten(name="flatten")(headModel)  # Fully connected layer
-headModel = Dense(128, activation="relu")(headModel)
+headModel = baseModel.output  # Initial Convolution Layer
+headModel = AveragePooling2D(pool_size=(7, 7))(headModel)  # Average Pooling Layer
+headModel = Flatten(name="flatten")(headModel)  # Flattens pooling layer
+headModel = Dense(128, activation="relu")(headModel)  # Fully connected layer
 headModel = Dropout(0.5)(headModel)
-headModel = Dense(2, activation="softmax")(headModel)
+headModel = Dense(2, activation="softmax")(headModel)  # Fully connected layer
 
 # place the head FC model on top of the base model (this will become
 # the actual model we will train)
