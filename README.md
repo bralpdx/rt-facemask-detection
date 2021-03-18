@@ -25,6 +25,13 @@ I.E. Red rectangle for 'No Mask Detected', and a Blue rectangle for 'Mask Detect
 
 ![demo gif](https://github.com/bralpdx/rt-facemask-detection/blob/master/demo/mask_v3.gif)
 
+#### Model Version 4 Training Accuracy and Loss:
+##### Over 20 EPOCHS with batch size = 128, and learning rate = 1e-4
+
+![v4 figure](https://github.com/bralpdx/rt-facemask-detection/blob/model/demo/version%204%20loss%20figure.png)
+
+Still performing poorly when an individual wears glasses. Need more diverse data.
+
 ### About
 ---
 This application based off of the following model:
