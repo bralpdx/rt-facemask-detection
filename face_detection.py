@@ -15,7 +15,7 @@ face_casc = cv2.CascadeClassifier(cascPath)
 # model = load_model("mask_recog_pt.h5")  # Pre-trained model
 IMG_SIZE = 224
 
-model = load_model("mask_recog_ver3.h5")  # Our custom model
+model = load_model("mask_recog_ver4.h5")  # Our custom model
 
 white = (255, 255, 255)
 black = (0, 0, 0)

@@ -11,6 +11,8 @@ from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import ReLU
+from tensorflow.keras.layers import MaxPool2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import to_categorical
@@ -35,7 +37,7 @@ baseModel = MobileNetV2(weights="imagenet", include_top=False,
 # construct the head of the model that will be placed on top of the
 # the base model
 headModel = baseModel.output  # Initial Convolution Layer
-headModel = AveragePooling2D(pool_size=(7, 7))(headModel)  # Average Pooling Layer
+headModel = AveragePooling2D(pool_size=(7, 7), strides=2)(headModel)  # Average Pooling Layer
 headModel = Flatten(name="flatten")(headModel)  # Flattens pooling layer
 headModel = Dense(128, activation="relu")(headModel)  # Fully connected layer
 headModel = Dropout(0.5)(headModel)
@@ -102,7 +104,7 @@ def cat_to_np(cat):
 if __name__ == "__main__":
     INIT_LR = 1e-4  # Learning rate
     EPOCHS = 20
-    BS = 32
+    BS = 128
     STEPS_PER_EPOCH = len(trainX) // BS
     STEPS_VALIDATION = len(testX) // BS
 
@@ -129,6 +131,6 @@ if __name__ == "__main__":
     print(classification_report(testY.argmax(axis=1), predIdxs,
                                 target_names=lb.classes_))
 
-    model.save("mask_recog_ver3.h5")
+    model.save("mask_recog_ver4.h5")
     message = "New dataset"
     show_plot(EPOCHS, H, message)
